@@ -1,0 +1,219 @@
+#+STARTUP: indent
+#+STARTUP: showeverything
+#+REVEAL_ROOT: file:///home/lakshmi/pgcon/reveal.js
+#+REVEAL_THEME: night
+#+REVEAL_HLEVEL: 2
+#+REVEAL_PLUGINS: (highlight)
+#+OPTIONS: toc:0
+
+#+TITLE: Building a BaaS using PostgreSQL
+#+AUTHOR: Lakshmi Narasimhan
+#+EMAIL: @lakshminp
+
+* myself
+#+ATTR_REVEAL: :frag (roll-in roll-in roll-in roll-in)
+- full stack developer
+- didn't take Databases 101
+- always finding faster ways to ship apps.
+- @lakshminp, ask me anything!
+
+* Intro
+    :PROPERTIES:
+    :reveal_background: ./images/periodic_big.jpg
+    :reveal_background_trans: slide
+    :END:
+
+Your mission, if you choose to accept it, is to build a REST API on top of your database.
+How closer can you get?
+
+* Frameworks
+
+** Pros
+#+ATTR_REVEAL: :frag (roll-in roll-in)
+- easy to get started
+- sensible defaults, avoid decision fatigue
+
+** Cons
+#+ATTR_REVEAL: :frag (roll-in roll-in)
+- hard to customize
+- lot of code
+
+* Postgrest advantages
+#+ATTR_REVEAL: :frag roll-in
+cleaner and a more standards compliant API than the one you'd write from scratch
+
+#+ATTR_REVEAL: :frag roll-in
+quick to get started, all you need to do is create the database.
+
+#+ATTR_REVEAL: :frag roll-in
+simplicity
+
+#+ATTR_REVEAL: :frag roll-in
+easy to scale
+
+* Why noBackend
+"Civilization advances by extending the number of important operations which we can perform without thinking of them."
+Alfred North Whitehead.
+
+** Abstration
+#+ATTR_REVEAL: :frag (roll-in roll-in roll-in roll-in)
+- we take a lot of backend stuff for granted
+- trend: backend becoming more and more easy to setup, ex. GraphQL(content)
+- frontend is getting more ready to consume REST API, ex. flavour of the month js frameworks popping up(form)
+- more separation bet. form and content
+
+
+* How postgrest works
+
+** Thin WAI written in Haskell on top of psql
+
+** No configuration or dependencies, just 1 executable for your favorite platform!
+
+** Follows the UNIX philosophy
+
+* Why postgres
+
+** ..because its the emacs of databases!
+
+"Postgres is the Emacs of databases."
+Craig Kerstiens
+https://speakerdeck.com/craigkerstiens/postgres-demystified-1
+
+** Supports json as first class citizen
+[[./images/json-vs-xml.png]]
+
+
+** Programmability
+#+ATTR_REVEAL: :frag (roll-in roll-in)
+- plsql, plv8 etc
+- fat models, thin controllers.
+
+* Recipe for a successful REST API
+
+** SSL
+Always use ssl to serve rest apis, no exceptions!
+
+** Versioning
+
+*** Why version APIs?
+#+ATTR_REVEAL: :frag roll-in
+APIs keep changing
+
+#+ATTR_REVEAL: :frag roll-in
+Avoid hair splitting
+
+*** Implementation
+#+ATTR_REVEAL: :frag roll-in
+Was done initially using schemas
+
+#+ATTR_REVEAL: :frag roll-in
+Now offloaded to Nginx
+
+#+ATTR_REVEAL: :frag roll-in
+- different schemas running in different ports
+- nginx configured to route accordingly
+
+
+** Authentication
+
+*** JWT
+http://stackoverflow.com/questions/26216489/json-web-token-jwt-benefits-over-a-database-session-token
+
+*** Row level security
+https://www.compose.io/articles/row-level-security-with-postgresql-95/
+
+http://blog.2ndquadrant.com/emulating-row-security-in-postgresql-9-4/
+
+
+** self describing/ self documenting, HATEOS
+
+#+BEGIN_SRC shell
+GET /
+#+END_SRC
+
+** Get only what you need
+
+#+ATTR_REVEAL: :frag roll-in
+You can customize which columns are returned using the select parameter:
+#+ATTR_REVEAL: :frag roll-in
+#+BEGIN_SRC shell 
+GET /people?select=age,height,weight
+#+END_SRC
+
+#+ATTR_REVEAL: :frag roll-in
+JSON drill-down
+#+ATTR_REVEAL: :frag roll-in
+#+BEGIN_SRC shell
+GET /stuff?json_col->a->>b=eq.2
+#+END_SRC
+
+** Other cool stuff
+
+*** Bulk inserts
+
+*** Bulk updates
+
+*** Limiting
+
+*** Pagination
+
+* Use cases
+
+#+ATTR_REVEAL: :frag (roll-in roll-in roll-in roll-in)
+- convert your legacy DB to an API
+
+- single page apps
+
+- mobile backends
+
+- rudimentary graphql(??)
+ 
+* Ecosystem and similar tools
+#+ATTR_REVEAL: :frag roll-in
+PostGraphQL
+https://github.com/calebmer/postgraphql
+
+Foobar
+
+* Known limitations
+#+ATTR_REVEAL: :frag (roll-in roll-in)
+- no nested resources
+Things like 
+#+BEGIN_SRC shell
+GET /people/students/1
+#+END_SRC
+are not allowed.
+
+- RPCs as POST requests
+
+* Try postgrest now
+
+- docker image
+https://hub.docker.com/r/begriffs/postgrest/
+
+- AWS
+
+- Heroku
+
+* ?s
+#+BEGIN_SRC sql
+CREATE TABLE genres (
+    id serial NOT NULL PRIMARY KEY,
+    name character varying(255) NOT NULL,
+    parent_id integer REFERENCES genres (id)
+);
+#+END_SRC
+
+#+begin_src sql
+  SELECT * FROM mytable
+  WHERE id > 500
+#+end_src
+
+
+* Links
+
+- http://blog.jonharrington.org/postgrest-introduction/
+
+- https://www.compose.io/articles/your-sql-schema-is-your-json-api-with-postgrest/
+
+- http://marmelab.com/blog/2015/03/23/using-ng-admin-with-postgrest.html

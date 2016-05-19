@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Building a BaaS using PostgreSQL</title>
+<meta name="author" content="(Lakshmi Narasimhan)"/>
+
+<link rel="stylesheet" href="file:///home/lakshmi/pgcon/reveal.js/css/reveal.css"/>
+<link rel="stylesheet" href="file:///home/lakshmi/pgcon/reveal.js/css/theme/night.css" id="theme"/>
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'file:///home/lakshmi/pgcon/reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide">
+<h1>Building a BaaS using PostgreSQL</h1>
+<h2>Lakshmi Narasimhan</h2>
+<h2><a href="mailto:@lakshminp">@lakshminp</a></h2>
+<h2></h2>
+</section>
+
+<section id="sec-1">
+
+<h2 >myself</h2>
+<ul >
+<li class="fragment roll-in">full stack developer</li>
+<li class="fragment roll-in">didn't take Databases 101</li>
+<li class="fragment roll-in">always finding faster ways to ship apps.</li>
+<li class="fragment roll-in">@lakshminp, ask me anything!</li>
+
+</ul>
+
+</section>
+<section id="sec-2" data-background="./images/periodic_big.jpg" data-background-transition="slide">
+
+<h2 >Intro</h2>
+<p>
+Your mission, if you choose to accept it, is to build a REST API on top of your database.
+How closer can you get?
+</p>
+
+</section>
+<section id="sec-3">
+
+<h2 >Frameworks</h2>
+</section>
+<section>
+<section id="sec-3-1">
+
+<h3 >Pros</h3>
+<ul >
+<li class="fragment roll-in">easy to get started</li>
+<li class="fragment roll-in">sensible defaults, avoid decision fatigue</li>
+
+</ul>
+</section>
+
+</section>
+<section>
+<section id="sec-3-2">
+
+<h3 >Cons</h3>
+<ul >
+<li class="fragment roll-in">hard to customize</li>
+<li class="fragment roll-in">lot of code</li>
+
+</ul>
+</section>
+
+</section>
+<section id="sec-4">
+
+<h2 >Postgrest advantages</h2>
+<p class="fragment roll-in">
+cleaner and a more standards compliant API than the one you'd write from scratch
+</p>
+
+<p class="fragment roll-in">
+quick to get started, all you need to do is create the database.
+</p>
+
+<p class="fragment roll-in">
+simplicity
+</p>
+
+<p class="fragment roll-in">
+easy to scale
+</p>
+
+</section>
+<section id="sec-5">
+
+<h2 >Why noBackend</h2>
+<p>
+"Civilization advances by extending the number of important operations which we can perform without thinking of them."
+Alfred North Whitehead.
+</p>
+
+</section>
+<section>
+<section id="sec-5-1">
+
+<h3 >Abstration</h3>
+<ul >
+<li class="fragment roll-in">we take a lot of backend stuff for granted</li>
+<li class="fragment roll-in">trend: backend becoming more and more easy to setup, ex. GraphQL(content)</li>
+<li class="fragment roll-in">frontend is getting more ready to consume REST API, ex. flavour of the month js frameworks popping up(form)</li>
+<li class="fragment roll-in">more separation bet. form and content</li>
+
+</ul>
+</section>
+
+
+</section>
+<section id="sec-6">
+
+<h2 >How postgrest works</h2>
+</section>
+<section>
+<section id="sec-6-1">
+
+<h3 >Thin WAI written in Haskell on top of psql</h3>
+</section>
+
+</section>
+<section>
+<section id="sec-6-2">
+
+<h3 >No configuration or dependencies, just 1 executable for your favorite platform!</h3>
+</section>
+
+</section>
+<section>
+<section id="sec-6-3">
+
+<h3 >Follows the UNIX philosophy</h3>
+</section>
+
+</section>
+<section id="sec-7">
+
+<h2 >Why postgres</h2>
+</section>
+<section>
+<section id="sec-7-1">
+
+<h3 >..because its the emacs of databases!</h3>
+<p>
+"Postgres is the Emacs of databases."
+Craig Kerstiens
+<a href="https://speakerdeck.com/craigkerstiens/postgres-demystified-1">https://speakerdeck.com/craigkerstiens/postgres-demystified-1</a>
+</p>
+</section>
+
+</section>
+<section>
+<section id="sec-7-2">
+
+<h3 >Supports json as first class citizen</h3>
+
+<div class="figure">
+<p><img src="./images/json-vs-xml.png" alt="json-vs-xml.png" />
+</p>
+</div>
+</section>
+
+
+</section>
+<section>
+<section id="sec-7-3">
+
+<h3 >Programmability</h3>
+<ul >
+<li class="fragment roll-in">plsql, plv8 etc</li>
+<li class="fragment roll-in">fat models, thin controllers.</li>
+
+</ul>
+</section>
+
+</section>
+<section id="sec-8">
+
+<h2 >Recipe for a successful REST API</h2>
+</section>
+<section>
+<section id="sec-8-1">
+
+<h3 >SSL</h3>
+<p>
+Always use ssl to serve rest apis, no exceptions!
+</p>
+</section>
+
+</section>
+<section>
+<section id="sec-8-2">
+
+<h3 >Versioning</h3>
+</section>
+<section id="sec-8-2-1">
+
+<h4 >Why version APIs?</h4>
+<p class="fragment roll-in">
+APIs keep changing
+</p>
+
+<p class="fragment roll-in">
+Avoid hair splitting
+</p>
+
+</section>
+<section id="sec-8-2-2">
+
+<h4 >Implementation</h4>
+<p class="fragment roll-in">
+Was done initially using schemas
+</p>
+
+<p class="fragment roll-in">
+Now offloaded to Nginx
+</p>
+
+<ul class="fragment roll-in">
+<li>different schemas running in different ports</li>
+<li>nginx configured to route accordingly</li>
+
+</ul>
+</section>
+
+
+</section>
+<section>
+<section id="sec-8-3">
+
+<h3 >Authentication</h3>
+</section>
+<section id="sec-8-3-1">
+
+<h4 >JWT</h4>
+<p>
+<a href="http://stackoverflow.com/questions/26216489/json-web-token-jwt-benefits-over-a-database-session-token">http://stackoverflow.com/questions/26216489/json-web-token-jwt-benefits-over-a-database-session-token</a>
+</p>
+
+</section>
+<section id="sec-8-3-2">
+
+<h4 >Row level security</h4>
+<p>
+<a href="https://www.compose.io/articles/row-level-security-with-postgresql-95/">https://www.compose.io/articles/row-level-security-with-postgresql-95/</a>
+</p>
+
+<p>
+<a href="http://blog.2ndquadrant.com/emulating-row-security-in-postgresql-9-4/">http://blog.2ndquadrant.com/emulating-row-security-in-postgresql-9-4/</a>
+</p>
+</section>
+
+
+</section>
+<section>
+<section id="sec-8-4">
+
+<h3 >self describing/ self documenting, HATEOS</h3>
+<div class="org-src-container">
+
+<pre  class="src src-shell">GET /
+</pre>
+</div>
+</section>
+
+</section>
+<section>
+<section id="sec-8-5">
+
+<h3 >Get only what you need</h3>
+<p class="fragment roll-in">
+You can customize which columns are returned using the select parameter:
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-shell">GET /people?<span style="color: #7DAF9C;">select</span>=age,height,weight
+</pre>
+</div>
+
+<p class="fragment roll-in">
+JSON drill-down
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-shell">GET /stuff?json_col-&gt;a-&gt;&gt;<span style="color: #7DAF9C;">b</span>=eq.2
+</pre>
+</div>
+</section>
+
+</section>
+<section>
+<section id="sec-8-6">
+
+<h3 >Other cool stuff</h3>
+</section>
+<section id="sec-8-6-1">
+
+<h4 >Bulk inserts</h4>
+
+</section>
+<section id="sec-8-6-2">
+
+<h4 >Bulk updates</h4>
+
+</section>
+<section id="sec-8-6-3">
+
+<h4 >Limiting</h4>
+
+</section>
+<section id="sec-8-6-4">
+
+<h4 >Pagination</h4>
+</section>
+
+</section>
+<section id="sec-9">
+
+<h2 >Use cases</h2>
+<ul >
+<li class="fragment roll-in">convert your legacy DB to an API</li>
+
+<li class="fragment roll-in">single page apps</li>
+
+<li class="fragment roll-in">mobile backends</li>
+
+<li class="fragment roll-in">rudimentary graphql(??)</li>
+
+</ul>
+
+</section>
+<section id="sec-10">
+
+<h2 >Ecosystem and similar tools</h2>
+<p class="fragment roll-in">
+PostGraphQL
+<a href="https://github.com/calebmer/postgraphql" class="fragment roll-in">https://github.com/calebmer/postgraphql</a>
+</p>
+
+<p>
+Foobar
+</p>
+
+</section>
+<section id="sec-11">
+
+<h2 >Known limitations</h2>
+<ul >
+<li class="fragment roll-in">no nested resources</li>
+
+</ul>
+<p>
+Things like 
+</p>
+<div class="org-src-container">
+
+<pre  class="src src-shell">GET /people/students/1
+</pre>
+</div>
+<p>
+are not allowed.
+</p>
+
+<ul >
+<li>RPCs as POST requests</li>
+
+</ul>
+
+</section>
+<section id="sec-12">
+
+<h2 >Try postgrest now</h2>
+<ul >
+<li>docker image</li>
+
+</ul>
+<p>
+<a href="https://hub.docker.com/r/begriffs/postgrest/">https://hub.docker.com/r/begriffs/postgrest/</a>
+</p>
+
+<ul >
+<li>AWS</li>
+
+<li>Heroku</li>
+
+</ul>
+
+</section>
+<section id="sec-13">
+
+<h2 >?s</h2>
+<div class="org-src-container">
+
+<pre  class="src src-sql"><span style="color: #EF5D32;">CREATE</span> <span style="color: #EF5D32;">TABLE</span> <span style="color: #EFAC32;">genres</span> (
+    <span style="color: #6C99BB;">id</span> <span style="color: #EFAC32; font-weight: bold;">serial</span> <span style="color: #EF5D32;">NOT</span> <span style="color: #EF5D32;">NULL</span> <span style="color: #EF5D32;">PRIMARY</span> <span style="color: #6C99BB;">KEY</span>,
+    <span style="color: #6C99BB;">name</span> <span style="color: #EFAC32; font-weight: bold;">character</span> <span style="color: #EFAC32; font-weight: bold;">varying</span>(255) <span style="color: #EF5D32;">NOT</span> <span style="color: #EF5D32;">NULL</span>,
+    parent_id <span style="color: #EFAC32; font-weight: bold;">integer</span> <span style="color: #EF5D32;">REFERENCES</span> genres (<span style="color: #6C99BB;">id</span>)
+);
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre  class="src src-sql"><span style="color: #EF5D32;">SELECT</span> * <span style="color: #EF5D32;">FROM</span> mytable
+<span style="color: #EF5D32;">WHERE</span> <span style="color: #6C99BB;">id</span> &gt; 500
+</pre>
+</div>
+
+
+</section>
+<section id="sec-14">
+
+<h2 >Links</h2>
+<ul >
+<li><a href="http://blog.jonharrington.org/postgrest-introduction/">http://blog.jonharrington.org/postgrest-introduction/</a></li>
+
+<li><a href="https://www.compose.io/articles/your-sql-schema-is-your-json-api-with-postgrest/">https://www.compose.io/articles/your-sql-schema-is-your-json-api-with-postgrest/</a></li>
+
+<li><a href="http://marmelab.com/blog/2015/03/23/using-ng-admin-with-postgrest.html">http://marmelab.com/blog/2015/03/23/using-ng-admin-with-postgrest.html</a></li>
+
+</ul>
+</section>
+</div>
+</div>
+
+<script src="file:///home/lakshmi/pgcon/reveal.js/lib/js/head.min.js"></script>
+<script src="file:///home/lakshmi/pgcon/reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: true,
+rollingLinks: false,
+keyboard: true,
+overview: true,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: 'file:///home/lakshmi/pgcon/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+]
+});
+</script>
+</body>
+</html>
