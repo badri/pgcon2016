@@ -1,24 +1,30 @@
+You can access the presentation [here](http://badri.github.io/pgcon2016/).
+
 # Setup
 
+Get Postgres 9.5 Docker image up and running.
+
 ```
-docker run --name pgcon-demo -e POSTGRES_PASSWORD=pgcon -e POSTGRES_USER=pgcon -d postgres
+$ docker pull postgres:9.5
+$ docker run --name pgcon-demo -e POSTGRES_PASSWORD=pgcon -e POSTGRES_USER=pgcon -d postgres
 ```
 
 ```
-postgrest postgres://pgcon:pgcon@<docker-container-ip>:5432/pgcon  --anonymous anon --jwt-secret correcthorsebatterystaple
+$ postgrest postgres://pgcon:pgcon@<ip-of-the-container>:5432/pgcon \
+  --anonymous anon --jwt-secret correcthorsebatterystaple
 ```
 
-Import your schema. You should get some notices, but that's OK.
+Import the `schema.sql` file. You should get some notices, but that's OK.
 
 ```
-$ psql -h 172.17.0.6 -U pgcon
+$ psql -h <ip-of-the-container> -U pgcon
 
 pgcon=# \i schema.sql
 ```
 
 Test the API using python.
 
-NOTE: you will have to install the requests(http://docs.python-requests.org/en/master/) library.
+*NOTE:* you will have to install the [requests](http://docs.python-requests.org/en/master/) library to run these examples.
 
 ```
 $ pip install requests
@@ -49,6 +55,8 @@ r = requests.post('http://localhost/rpc/signup', json={"email": "user2@example.c
 ```
 
 ------------------------------------------------------
+
+# Scenario 1
 
 Login as 1st user.
 
@@ -104,7 +112,7 @@ headers = {'Authorization': 'Bearer ' + token }
 ```
 
 
-Alter table now, and API is still up!
+Alter table now, and API reflects changes!
 
 ```
 ALTER TABLE todos
@@ -117,8 +125,10 @@ r = requests.get('http://localhost/todos?select=title,complete', headers=headers
 
 ------------------------------------------------------
 
+# Scenario 2
+
 Login as user1 again.
-NOTE that there is no /logout as JWT is a client side thing. You can implement one by invalidating your JWT.
+*NOTE* that there is no /logout as JWT is a client side thing. You can implement one by invalidating your JWT.
 
 
 Let's try logging using invalid credentials.
@@ -156,12 +166,14 @@ Patch a todo.
 data = {'title': 'Have fun at Pgcon 2016!'}
 r = requests.post('http://localhost/todos', headers=headers, json=data)
 data = {'title': 'Have fun at Pgcon 2017!'}
-r = requests.patch('http://localhost/todos/25', headers=headers, json=data)
+r = requests.patch('http://localhost/todos/24', headers=headers, json=data)
 ```
 Delete a todo.
 
 ```
-r = requests.delete('http://localhost/todos/25', headers=headers)
+r = requests.delete('http://localhost/todos/24', headers=headers)
 ```
 
+# Contact
+[@lakshminp](https://twitter.com/lakshminp)
 
