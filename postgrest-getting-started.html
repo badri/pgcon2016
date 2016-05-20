@@ -32,31 +32,30 @@
 
 <section id="sec-1">
 
-<h2 >myself</h2>
+<h2 >About me</h2>
 <ul >
 <li class="fragment roll-in">full stack developer</li>
 <li class="fragment roll-in">didn't take Databases 101</li>
 <li class="fragment roll-in">always finding faster ways to ship apps.</li>
-<li class="fragment roll-in">@lakshminp, ask me anything!</li>
 
 </ul>
 
 </section>
-<section id="sec-2" data-background="./images/periodic_big.jpg" data-background-transition="slide">
+<section id="sec-2">
 
 <h2 >Intro</h2>
 <p>
 Your mission, if you choose to accept it, is to build a REST API on top of your database.
-How closer can you get?
 </p>
 
+
 </section>
-<section id="sec-3">
+<section id="sec-3" data-background="./images/fw.jpg" data-background-transition="slide">
 
 <h2 >Frameworks</h2>
 </section>
 <section>
-<section id="sec-3-1">
+<section id="sec-3-1" data-background="./images/fw.jpg" data-background-transition="slide">
 
 <h3 >Pros</h3>
 <ul >
@@ -68,7 +67,7 @@ How closer can you get?
 
 </section>
 <section>
-<section id="sec-3-2">
+<section id="sec-3-2" data-background="./images/fw.jpg" data-background-transition="slide">
 
 <h3 >Cons</h3>
 <ul >
@@ -81,7 +80,7 @@ How closer can you get?
 </section>
 <section id="sec-4">
 
-<h2 >Postgrest advantages</h2>
+<h2 >Enter Postgrest</h2>
 <p class="fragment roll-in">
 cleaner and a more standards compliant API than the one you'd write from scratch
 </p>
@@ -102,9 +101,19 @@ easy to scale
 <section id="sec-5">
 
 <h2 >Why noBackend</h2>
+
+<div class="figure">
+<p><img src="./images/server.jpg" alt="server.jpg" />
+</p>
+</div>
+
 <p>
 "Civilization advances by extending the number of important operations which we can perform without thinking of them."
-Alfred North Whitehead.
+ Alfred North Whitehead.
+</p>
+
+<p class="fragment roll-in">
+WARNING: this does not imply that we run without any backend.
 </p>
 
 </section>
@@ -112,6 +121,12 @@ Alfred North Whitehead.
 <section id="sec-5-1">
 
 <h3 >Abstration</h3>
+
+<div class="figure">
+<p><img src="./images/server.jpg" alt="server.jpg" />
+</p>
+</div>
+
 <ul >
 <li class="fragment roll-in">we take a lot of backend stuff for granted</li>
 <li class="fragment roll-in">trend: backend becoming more and more easy to setup, ex. GraphQL(content)</li>
@@ -123,62 +138,118 @@ Alfred North Whitehead.
 
 
 </section>
-<section id="sec-6">
+<section id="sec-6" data-background="./images/gear.jpg" data-background-transition="slide">
 
 <h2 >How postgrest works</h2>
 </section>
 <section>
-<section id="sec-6-1">
+<section id="sec-6-1" data-background="./images/gear.jpg" data-background-transition="slide">
 
 <h3 >Thin WAI written in Haskell on top of psql</h3>
+<p class="fragment roll-in">
+Generic interface between application and webserver
+</p>
 </section>
+
+
 
 </section>
 <section>
-<section id="sec-6-2">
+<section id="sec-6-2" data-background="./images/gear.jpg" data-background-transition="slide">
 
 <h3 >No configuration or dependencies, just 1 executable for your favorite platform!</h3>
+<div class="org-src-container">
+
+<pre  class="src src-shell">Usage: postgrest DB_URL (-a|--anonymous ROLE) [-s|--schema NAME]
+                 [-p|--port PORT] [-j|--jwt-secret SECRET] [-o|--pool COUNT]
+                 [-m|--max-rows COUNT]
+  PostgREST 0.3.1.1 / create a REST API to an existing Postgres database
+
+Available options:
+  -h,--help                Show this help text
+  DB_URL                   (REQUIRED) database connection string, e.g.
+                           postgres://user:pass@host:port/db
+  -a,--anonymous ROLE      (REQUIRED) postgres role to use for non-authenticated
+                           requests
+  -s,--schema NAME         schema to use for API routes (default: <span style="color: #D9D762;">"public"</span>)
+  -p,--port PORT           port number on which to run HTTP
+                           server (default: 3000)
+  -j,--jwt-secret SECRET   secret used to encrypt and decrypt JWT
+                           tokens (default: <span style="color: #D9D762;">"secret"</span>)
+  -o,--pool COUNT          max connections<span style="color: #EF5D32;"> in</span> database pool (default: 10)
+  -m,--max-rows COUNT      max rows<span style="color: #EF5D32;"> in</span> response (default: <span style="color: #D9D762;">"infinity"</span>)
+</pre>
+</div>
+
+<p class="fragment roll-in">
+Follows the UNIX philosophy
+</p>
 </section>
 
 </section>
 <section>
-<section id="sec-6-3">
+<section id="sec-6-3" data-background="./images/semantics.jpg" data-background-transition="slide">
 
-<h3 >Follows the UNIX philosophy</h3>
+<h3 >The semantics</h3>
+<p class="fragment roll-in">
+tables/views map to routes
+</p>
+
+<ul class="fragment roll-in">
+<li>POST           ~ INSERT</li>
+<li>GET            ~ SELECT</li>
+<li>GET /1?foo=bar ~ SELECT WHERE foo=bar</li>
+<li>PATCH          ~ UPDATE</li>
+<li>PUT            ~ UPSERT</li>
+<li>DELETE         ~ DELETE</li>
+
+</ul>
+
+<p class="fragment roll-in">
+Pagination/range headers ~ LIMIT and OFFSET
+</p>
+
+<p class="fragment roll-in">
+Auth ~ user roles  
+</p>
 </section>
 
+
 </section>
-<section id="sec-7">
+<section id="sec-7" data-background="./images/postgres.jpg" data-background-transition="slide">
 
 <h2 >Why postgres</h2>
 </section>
 <section>
-<section id="sec-7-1">
+<section id="sec-7-1" data-background="./images/postgres.jpg" data-background-transition="slide">
 
 <h3 >..because its the emacs of databases!</h3>
 <p>
 "Postgres is the Emacs of databases."
-Craig Kerstiens
+ Craig Kerstiens
 <a href="https://speakerdeck.com/craigkerstiens/postgres-demystified-1">https://speakerdeck.com/craigkerstiens/postgres-demystified-1</a>
 </p>
 </section>
 
 </section>
 <section>
-<section id="sec-7-2">
+<section id="sec-7-2" data-background="./images/json-vs-xml.png" data-background-transition="slide">
 
 <h3 >Supports json as first class citizen</h3>
-
-<div class="figure">
-<p><img src="./images/json-vs-xml.png" alt="json-vs-xml.png" />
+<p class="fragment roll-in">
+A lot less verbose than XML
 </p>
-</div>
+
+<p class="fragment roll-in">
+Native javascript!
+</p>
 </section>
+
 
 
 </section>
 <section>
-<section id="sec-7-3">
+<section id="sec-7-3" data-background="./images/computer.jpg" data-background-transition="slide">
 
 <h3 >Programmability</h3>
 <ul >
@@ -194,21 +265,29 @@ Craig Kerstiens
 <h2 >Recipe for a successful REST API</h2>
 </section>
 <section>
-<section id="sec-8-1">
+<section id="sec-8-1" data-background="./images/locks.jpg" data-background-transition="slide">
 
 <h3 >SSL</h3>
 <p>
 Always use ssl to serve rest apis, no exceptions!
 </p>
+
+</section>
+<section id="sec-8-1-1" data-background="./images/locks.jpg" data-background-transition="slide">
+
+<h4 >Implementation</h4>
+<p class="fragment roll-in">
+Use Nginx
+</p>
 </section>
 
 </section>
 <section>
-<section id="sec-8-2">
+<section id="sec-8-2" data-background="./images/icecream.jpg" data-background-transition="slide">
 
 <h3 >Versioning</h3>
 </section>
-<section id="sec-8-2-1">
+<section id="sec-8-2-1" data-background="./images/icecream.jpg" data-background-transition="slide">
 
 <h4 >Why version APIs?</h4>
 <p class="fragment roll-in">
@@ -220,7 +299,7 @@ Avoid hair splitting
 </p>
 
 </section>
-<section id="sec-8-2-2">
+<section id="sec-8-2-2" data-background="./images/icecream.jpg" data-background-transition="slide">
 
 <h4 >Implementation</h4>
 <p class="fragment roll-in">
@@ -241,25 +320,66 @@ Now offloaded to Nginx
 
 </section>
 <section>
-<section id="sec-8-3">
+<section id="sec-8-3" data-background="./images/safe.jpg" data-background-transition="slide">
 
 <h3 >Authentication</h3>
 </section>
-<section id="sec-8-3-1">
+<section id="sec-8-3-1" data-background="./images/safe.jpg" data-background-transition="slide">
 
 <h4 >JWT</h4>
-<p>
-<a href="http://stackoverflow.com/questions/26216489/json-web-token-jwt-benefits-over-a-database-session-token">http://stackoverflow.com/questions/26216489/json-web-token-jwt-benefits-over-a-database-session-token</a>
+<p class="fragment roll-in">
+Open standard for passing claims between 2 parties.
+</p>
+
+<p class="fragment roll-in">
+User does HTTP requests with a role claim
 </p>
 
 </section>
-<section id="sec-8-3-2">
+<section id="sec-8-3-2" data-background="./images/safe.jpg" data-background-transition="slide">
 
-<h4 >Row level security</h4>
-<p>
-<a href="https://www.compose.io/articles/row-level-security-with-postgresql-95/">https://www.compose.io/articles/row-level-security-with-postgresql-95/</a>
+<h4 >JWT other benefits</h4>
+<p class="fragment roll-in">
+One key to rule them all.
 </p>
 
+<p class="fragment roll-in">
+Pushes everything to client.
+</p>
+
+
+
+</section>
+<section id="sec-8-3-3" data-background="./images/safe.jpg" data-background-transition="slide">
+
+<h4 >Row level security</h4>
+<div class="org-src-container">
+
+<pre  class="src src-sql"><span style="color: #6C99BB;">ALTER</span> <span style="color: #EF5D32;">TABLE</span> <span style="color: #EFAC32;">todos</span> <span style="color: #6C99BB;">ENABLE</span> <span style="color: #6C99BB;">ROW</span> <span style="color: #6C99BB;">LEVEL</span> <span style="color: #6C99BB;">SECURITY</span>;
+
+<span style="color: #EF5D32;">CREATE</span> POLICY own_todos <span style="color: #EF5D32;">ON</span> todos  
+  <span style="color: #EF5D32;">USING</span> (author = basic_auth.current_email());
+
+<span style="color: #EF5D32;">CREATE</span> POLICY authors_eigencreate <span style="color: #EF5D32;">ON</span> todos <span style="color: #EF5D32;">FOR</span> <span style="color: #6C99BB;">INSERT</span>
+  <span style="color: #EF5D32;">WITH</span> <span style="color: #EF5D32;">CHECK</span> (
+    author = basic_auth.current_email()
+  );
+
+<span style="color: #EF5D32;">CREATE</span> POLICY authors_eigenedit <span style="color: #EF5D32;">ON</span> todos <span style="color: #EF5D32;">FOR</span> <span style="color: #6C99BB;">update</span>
+  <span style="color: #EF5D32;">USING</span> (author = basic_auth.current_email())
+  <span style="color: #EF5D32;">WITH</span> <span style="color: #EF5D32;">CHECK</span> (
+    author = basic_auth.current_email()
+  );
+
+<span style="color: #EF5D32;">CREATE</span> POLICY authors_eigendelete <span style="color: #EF5D32;">ON</span> todos <span style="color: #EF5D32;">FOR</span> <span style="color: #6C99BB;">delete</span>
+  <span style="color: #EF5D32;">USING</span> (author = basic_auth.current_email());
+</pre>
+</div>
+
+</section>
+<section id="sec-8-3-4" data-background="./images/safe.jpg" data-background-transition="slide">
+
+<h4 >Can be emulated for postgres &lt;=9.4</h4>
 <p>
 <a href="http://blog.2ndquadrant.com/emulating-row-security-in-postgresql-9-4/">http://blog.2ndquadrant.com/emulating-row-security-in-postgresql-9-4/</a>
 </p>
@@ -270,12 +390,14 @@ Now offloaded to Nginx
 <section>
 <section id="sec-8-4">
 
-<h3 >self describing/ self documenting, HATEOS</h3>
-<div class="org-src-container">
+<h3 >Self describing</h3>
+<p class="fragment roll-in">
+GET /
+</p>
 
-<pre  class="src src-shell">GET /
-</pre>
-</div>
+<p class="fragment roll-in">
+Rudimentary HATEOS
+</p>
 </section>
 
 </section>
@@ -287,21 +409,17 @@ Now offloaded to Nginx
 You can customize which columns are returned using the select parameter:
 </p>
 
-<div class="org-src-container">
-
-<pre  class="src src-shell">GET /people?<span style="color: #7DAF9C;">select</span>=age,height,weight
-</pre>
-</div>
+<p class="fragment roll-in">
+GET /people?select=age,height,weight
+</p>
 
 <p class="fragment roll-in">
 JSON drill-down
 </p>
 
-<div class="org-src-container">
-
-<pre  class="src src-shell">GET /stuff?json_col-&gt;a-&gt;&gt;<span style="color: #7DAF9C;">b</span>=eq.2
-</pre>
-</div>
+<p class="fragment roll-in">
+GET /people?employees-&gt;3-&gt;&gt;id=eq.2
+</p>
 </section>
 
 </section>
@@ -331,7 +449,7 @@ JSON drill-down
 </section>
 
 </section>
-<section id="sec-9">
+<section id="sec-9" data-background="./images/retro.jpg" data-background-transition="slide">
 
 <h2 >Use cases</h2>
 <ul >
@@ -341,7 +459,7 @@ JSON drill-down
 
 <li class="fragment roll-in">mobile backends</li>
 
-<li class="fragment roll-in">rudimentary graphql(??)</li>
+<li class="fragment roll-in">poor man's Parse, using <code>pg_notify</code></li>
 
 </ul>
 
@@ -361,79 +479,91 @@ Foobar
 </section>
 <section id="sec-11">
 
-<h2 >Known limitations</h2>
-<ul >
-<li class="fragment roll-in">no nested resources</li>
-
-</ul>
-<p>
-Things like 
+<h2 >Limitations</h2>
+<p class="fragment roll-in">
+No nested resources
 </p>
-<div class="org-src-container">
 
-<pre  class="src src-shell">GET /people/students/1
-</pre>
-</div>
+<p>
+Things like:
+</p>
+
+<p>
+GET /people/students/1
+</p>
+
 <p>
 are not allowed.
 </p>
 
-<ul >
-<li>RPCs as POST requests</li>
+<p>
+Relational data is flat by nature.
+</p>
 
-</ul>
+<p class="fragment roll-in">
+RPCs as POST requests
+</p>
 
 </section>
 <section id="sec-12">
 
 <h2 >Try postgrest now</h2>
-<ul >
-<li>docker image</li>
-
-</ul>
-<p>
-<a href="https://hub.docker.com/r/begriffs/postgrest/">https://hub.docker.com/r/begriffs/postgrest/</a>
+<p class="fragment roll-in">
+Docker image
+<a href="https://hub.docker.com/r/begriffs/postgrest/" class="fragment roll-in">https://hub.docker.com/r/begriffs/postgrest/</a>
 </p>
 
-<ul >
-<li>AWS</li>
+<p class="fragment roll-in">
+AWS
+Hint: AWS Lambda.
+</p>
 
-<li>Heroku</li>
-
-</ul>
+<p class="fragment roll-in">
+Heroku
+</p>
 
 </section>
-<section id="sec-13">
+<section id="sec-13" data-background="./images/demo.jpg" data-background-transition="slide">
 
-<h2 >?s</h2>
-<div class="org-src-container">
-
-<pre  class="src src-sql"><span style="color: #EF5D32;">CREATE</span> <span style="color: #EF5D32;">TABLE</span> <span style="color: #EFAC32;">genres</span> (
-    <span style="color: #6C99BB;">id</span> <span style="color: #EFAC32; font-weight: bold;">serial</span> <span style="color: #EF5D32;">NOT</span> <span style="color: #EF5D32;">NULL</span> <span style="color: #EF5D32;">PRIMARY</span> <span style="color: #6C99BB;">KEY</span>,
-    <span style="color: #6C99BB;">name</span> <span style="color: #EFAC32; font-weight: bold;">character</span> <span style="color: #EFAC32; font-weight: bold;">varying</span>(255) <span style="color: #EF5D32;">NOT</span> <span style="color: #EF5D32;">NULL</span>,
-    parent_id <span style="color: #EFAC32; font-weight: bold;">integer</span> <span style="color: #EF5D32;">REFERENCES</span> genres (<span style="color: #6C99BB;">id</span>)
-);
-</pre>
-</div>
-
-<div class="org-src-container">
-
-<pre  class="src src-sql"><span style="color: #EF5D32;">SELECT</span> * <span style="color: #EF5D32;">FROM</span> mytable
-<span style="color: #EF5D32;">WHERE</span> <span style="color: #6C99BB;">id</span> &gt; 500
-</pre>
-</div>
-
+<h2 >Demo time!</h2>
 
 </section>
 <section id="sec-14">
 
+<h2 >?s</h2>
+
+
+</section>
+<section id="sec-15">
+
 <h2 >Links</h2>
 <ul >
-<li><a href="http://blog.jonharrington.org/postgrest-introduction/">http://blog.jonharrington.org/postgrest-introduction/</a></li>
+<li><a href="https://github.com/begriffs/postgrest">Show me the code</a></li>
 
-<li><a href="https://www.compose.io/articles/your-sql-schema-is-your-json-api-with-postgrest/">https://www.compose.io/articles/your-sql-schema-is-your-json-api-with-postgrest/</a></li>
+<li><a href="http://postgrest.com/">http://postgrest.com/</a></li>
 
-<li><a href="http://marmelab.com/blog/2015/03/23/using-ng-admin-with-postgrest.html">http://marmelab.com/blog/2015/03/23/using-ng-admin-with-postgrest.html</a></li>
+<li><a href="http://nobackend.org/">NoBackend</a></li>
+
+<li><a href="https://github.com/badri/pgcon2016">These slides and demo code</a></li>
+
+</ul>
+
+</section>
+<section id="sec-16">
+
+<h2 >Image credits</h2>
+<ul >
+<li><a href="https://www.flickr.com/photos/pong/288491653/">https://www.flickr.com/photos/pong/288491653/</a></li>
+<li><a href="https://www.flickr.com/photos/hinnosaar/3932759035/">https://www.flickr.com/photos/hinnosaar/3932759035/</a></li>
+<li><a href="https://www.flickr.com/photos/sidelong/3878741556/">https://www.flickr.com/photos/sidelong/3878741556/</a></li>
+<li><a href="https://www.flickr.com/photos/72562013@N06/8415307629/">https://www.flickr.com/photos/72562013@N06/8415307629/</a></li>
+<li><a href="https://www.flickr.com/photos/ajmexico/3281139507/">https://www.flickr.com/photos/ajmexico/3281139507/</a></li>
+<li><a href="https://www.flickr.com/photos/kylemay/1470605905/">https://www.flickr.com/photos/kylemay/1470605905/</a></li>
+<li><a href="https://www.flickr.com/photos/matski_98/21938357/">https://www.flickr.com/photos/matski_98/21938357/</a></li>
+<li><a href="https://www.flickr.com/photos/danramarch/4565233602/">https://www.flickr.com/photos/danramarch/4565233602/</a></li>
+<li><a href="https://www.flickr.com/photos/chrisandhilleary/191838649/">https://www.flickr.com/photos/chrisandhilleary/191838649/</a></li>
+<li><a href="https://www.flickr.com/photos/natethemagi/8674074864/">https://www.flickr.com/photos/natethemagi/8674074864/</a></li>
+<li><a href="https://www.flickr.com/photos/cactusbeetroot/5876761252/">https://www.flickr.com/photos/cactusbeetroot/5876761252/</a></li>
 
 </ul>
 </section>
@@ -468,7 +598,10 @@ multiplex: {
 
 // Optional libraries used to extend on reveal.js
 dependencies: [
- { src: 'file:///home/lakshmi/pgcon/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+ { src: 'file:///home/lakshmi/pgcon/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+ { src: 'file:///home/lakshmi/pgcon/reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'file:///home/lakshmi/pgcon/reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'file:///home/lakshmi/pgcon/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
 ]
 });
 </script>

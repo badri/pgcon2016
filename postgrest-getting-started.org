@@ -3,42 +3,51 @@
 #+REVEAL_ROOT: file:///home/lakshmi/pgcon/reveal.js
 #+REVEAL_THEME: night
 #+REVEAL_HLEVEL: 2
-#+REVEAL_PLUGINS: (highlight)
+#+REVEAL_PLUGINS: (highlight markdown notes)
 #+OPTIONS: toc:0
 
 #+TITLE: Building a BaaS using PostgreSQL
 #+AUTHOR: Lakshmi Narasimhan
 #+EMAIL: @lakshminp
 
-* myself
+* About me
 #+ATTR_REVEAL: :frag (roll-in roll-in roll-in roll-in)
 - full stack developer
 - didn't take Databases 101
 - always finding faster ways to ship apps.
-- @lakshminp, ask me anything!
 
 * Intro
+Your mission, if you choose to accept it, is to build a REST API on top of your database.
+
+
+* Frameworks
     :PROPERTIES:
-    :reveal_background: ./images/periodic_big.jpg
+    :reveal_background: ./images/fw.jpg
     :reveal_background_trans: slide
     :END:
 
-Your mission, if you choose to accept it, is to build a REST API on top of your database.
-How closer can you get?
-
-* Frameworks
-
 ** Pros
+    :PROPERTIES:
+    :reveal_background: ./images/fw.jpg
+    :reveal_background_trans: slide
+    :END:
+
 #+ATTR_REVEAL: :frag (roll-in roll-in)
 - easy to get started
 - sensible defaults, avoid decision fatigue
 
 ** Cons
+    :PROPERTIES:
+    :reveal_background: ./images/fw.jpg
+    :reveal_background_trans: slide
+    :END:
+
 #+ATTR_REVEAL: :frag (roll-in roll-in)
 - hard to customize
 - lot of code
 
-* Postgrest advantages
+* Enter Postgrest
+
 #+ATTR_REVEAL: :frag roll-in
 cleaner and a more standards compliant API than the one you'd write from scratch
 
@@ -52,10 +61,19 @@ simplicity
 easy to scale
 
 * Why noBackend
+
+[[./images/server.jpg]]
+
 "Civilization advances by extending the number of important operations which we can perform without thinking of them."
-Alfred North Whitehead.
+ Alfred North Whitehead.
+
+#+ATTR_REVEAL: :frag roll-in
+WARNING: this does not imply that we run without any backend.
 
 ** Abstration
+
+[[./images/server.jpg]]
+
 #+ATTR_REVEAL: :frag (roll-in roll-in roll-in roll-in)
 - we take a lot of backend stuff for granted
 - trend: backend becoming more and more easy to setup, ex. GraphQL(content)
@@ -64,26 +82,113 @@ Alfred North Whitehead.
 
 
 * How postgrest works
+    :PROPERTIES:
+    :reveal_background: ./images/gear.jpg
+    :reveal_background_trans: slide
+    :END:
 
 ** Thin WAI written in Haskell on top of psql
+    :PROPERTIES:
+    :reveal_background: ./images/gear.jpg
+    :reveal_background_trans: slide
+    :END:
+
+#+ATTR_REVEAL: :frag roll-in
+Generic interface between application and webserver
+
+
 
 ** No configuration or dependencies, just 1 executable for your favorite platform!
+    :PROPERTIES:
+    :reveal_background: ./images/gear.jpg
+    :reveal_background_trans: slide
+    :END:
 
-** Follows the UNIX philosophy
+#+BEGIN_SRC shell
+Usage: postgrest DB_URL (-a|--anonymous ROLE) [-s|--schema NAME]
+                 [-p|--port PORT] [-j|--jwt-secret SECRET] [-o|--pool COUNT]
+                 [-m|--max-rows COUNT]
+  PostgREST 0.3.1.1 / create a REST API to an existing Postgres database
+
+Available options:
+  -h,--help                Show this help text
+  DB_URL                   (REQUIRED) database connection string, e.g.
+                           postgres://user:pass@host:port/db
+  -a,--anonymous ROLE      (REQUIRED) postgres role to use for non-authenticated
+                           requests
+  -s,--schema NAME         schema to use for API routes (default: "public")
+  -p,--port PORT           port number on which to run HTTP
+                           server (default: 3000)
+  -j,--jwt-secret SECRET   secret used to encrypt and decrypt JWT
+                           tokens (default: "secret")
+  -o,--pool COUNT          max connections in database pool (default: 10)
+  -m,--max-rows COUNT      max rows in response (default: "infinity")
+#+END_SRC
+
+#+ATTR_REVEAL: :frag roll-in
+Follows the UNIX philosophy
+
+** The semantics
+    :PROPERTIES:
+    :reveal_background: ./images/semantics.jpg
+    :reveal_background_trans: slide
+    :END:
+
+#+ATTR_REVEAL: :frag roll-in
+tables/views map to routes
+
+#+ATTR_REVEAL: :frag roll-in
+- POST           ~ INSERT
+- GET            ~ SELECT
+- GET /1?foo=bar ~ SELECT WHERE foo=bar
+- PATCH          ~ UPDATE
+- PUT            ~ UPSERT
+- DELETE         ~ DELETE
+
+#+ATTR_REVEAL: :frag roll-in
+Pagination/range headers ~ LIMIT and OFFSET
+
+#+ATTR_REVEAL: :frag roll-in
+Auth ~ user roles  
+
 
 * Why postgres
+    :PROPERTIES:
+    :reveal_background: ./images/postgres.jpg
+    :reveal_background_trans: slide
+    :END:
+
 
 ** ..because its the emacs of databases!
+    :PROPERTIES:
+    :reveal_background: ./images/postgres.jpg
+    :reveal_background_trans: slide
+    :END:
 
 "Postgres is the Emacs of databases."
-Craig Kerstiens
+ Craig Kerstiens
 https://speakerdeck.com/craigkerstiens/postgres-demystified-1
 
 ** Supports json as first class citizen
-[[./images/json-vs-xml.png]]
+    :PROPERTIES:
+    :reveal_background: ./images/json-vs-xml.png
+    :reveal_background_trans: slide
+    :END:
+
+#+ATTR_REVEAL: :frag roll-in
+A lot less verbose than XML
+
+#+ATTR_REVEAL: :frag roll-in
+Native javascript!
+
 
 
 ** Programmability
+    :PROPERTIES:
+    :reveal_background: ./images/computer.jpg
+    :reveal_background_trans: slide
+    :END:
+
 #+ATTR_REVEAL: :frag (roll-in roll-in)
 - plsql, plv8 etc
 - fat models, thin controllers.
@@ -91,11 +196,34 @@ https://speakerdeck.com/craigkerstiens/postgres-demystified-1
 * Recipe for a successful REST API
 
 ** SSL
+    :PROPERTIES:
+    :reveal_background: ./images/locks.jpg
+    :reveal_background_trans: slide
+    :END:
+
 Always use ssl to serve rest apis, no exceptions!
 
+*** Implementation
+    :PROPERTIES:
+    :reveal_background: ./images/locks.jpg
+    :reveal_background_trans: slide
+    :END:
+
+#+ATTR_REVEAL: :frag roll-in
+Use Nginx
+
 ** Versioning
+    :PROPERTIES:
+    :reveal_background: ./images/icecream.jpg
+    :reveal_background_trans: slide
+    :END:
 
 *** Why version APIs?
+    :PROPERTIES:
+    :reveal_background: ./images/icecream.jpg
+    :reveal_background_trans: slide
+    :END:
+
 #+ATTR_REVEAL: :frag roll-in
 APIs keep changing
 
@@ -103,6 +231,11 @@ APIs keep changing
 Avoid hair splitting
 
 *** Implementation
+    :PROPERTIES:
+    :reveal_background: ./images/icecream.jpg
+    :reveal_background_trans: slide
+    :END:
+
 #+ATTR_REVEAL: :frag roll-in
 Was done initially using schemas
 
@@ -115,37 +248,95 @@ Now offloaded to Nginx
 
 
 ** Authentication
+    :PROPERTIES:
+    :reveal_background: ./images/safe.jpg
+    :reveal_background_trans: slide
+    :END:
 
 *** JWT
-http://stackoverflow.com/questions/26216489/json-web-token-jwt-benefits-over-a-database-session-token
+    :PROPERTIES:
+    :reveal_background: ./images/safe.jpg
+    :reveal_background_trans: slide
+    :END:
+
+#+ATTR_REVEAL: :frag roll-in
+Open standard for passing claims between 2 parties.
+
+#+ATTR_REVEAL: :frag roll-in
+User does HTTP requests with a role claim
+
+*** JWT other benefits
+    :PROPERTIES:
+    :reveal_background: ./images/safe.jpg
+    :reveal_background_trans: slide
+    :END:
+
+#+ATTR_REVEAL: :frag roll-in
+One key to rule them all.
+
+#+ATTR_REVEAL: :frag roll-in
+Pushes everything to client.
+
+
 
 *** Row level security
-https://www.compose.io/articles/row-level-security-with-postgresql-95/
+    :PROPERTIES:
+    :reveal_background: ./images/safe.jpg
+    :reveal_background_trans: slide
+    :END:
+
+#+BEGIN_SRC sql
+ALTER TABLE todos ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY own_todos ON todos  
+  USING (author = basic_auth.current_email());
+
+CREATE POLICY authors_eigencreate ON todos FOR INSERT
+  WITH CHECK (
+    author = basic_auth.current_email()
+  );
+
+CREATE POLICY authors_eigenedit ON todos FOR update
+  USING (author = basic_auth.current_email())
+  WITH CHECK (
+    author = basic_auth.current_email()
+  );
+
+CREATE POLICY authors_eigendelete ON todos FOR delete
+  USING (author = basic_auth.current_email());
+
+#+END_SRC
+
+*** Can be emulated for postgres <=9.4
+    :PROPERTIES:
+    :reveal_background: ./images/safe.jpg
+    :reveal_background_trans: slide
+    :END:
 
 http://blog.2ndquadrant.com/emulating-row-security-in-postgresql-9-4/
 
 
-** self describing/ self documenting, HATEOS
+** Self describing
 
-#+BEGIN_SRC shell
+#+ATTR_REVEAL: :frag roll-in
 GET /
-#+END_SRC
+
+#+ATTR_REVEAL: :frag roll-in
+Rudimentary HATEOS
 
 ** Get only what you need
 
 #+ATTR_REVEAL: :frag roll-in
 You can customize which columns are returned using the select parameter:
+
 #+ATTR_REVEAL: :frag roll-in
-#+BEGIN_SRC shell 
 GET /people?select=age,height,weight
-#+END_SRC
 
 #+ATTR_REVEAL: :frag roll-in
 JSON drill-down
+
 #+ATTR_REVEAL: :frag roll-in
-#+BEGIN_SRC shell
-GET /stuff?json_col->a->>b=eq.2
-#+END_SRC
+GET /people?employees->3->>id=eq.2
 
 ** Other cool stuff
 
@@ -158,6 +349,10 @@ GET /stuff?json_col->a->>b=eq.2
 *** Pagination
 
 * Use cases
+    :PROPERTIES:
+    :reveal_background: ./images/retro.jpg
+    :reveal_background_trans: slide
+    :END:
 
 #+ATTR_REVEAL: :frag (roll-in roll-in roll-in roll-in)
 - convert your legacy DB to an API
@@ -166,7 +361,7 @@ GET /stuff?json_col->a->>b=eq.2
 
 - mobile backends
 
-- rudimentary graphql(??)
+- poor man's Parse, using =pg_notify=
  
 * Ecosystem and similar tools
 #+ATTR_REVEAL: :frag roll-in
@@ -175,45 +370,64 @@ https://github.com/calebmer/postgraphql
 
 Foobar
 
-* Known limitations
-#+ATTR_REVEAL: :frag (roll-in roll-in)
-- no nested resources
-Things like 
-#+BEGIN_SRC shell
+* Limitations
+
+#+ATTR_REVEAL: :frag roll-in
+No nested resources
+
+Things like:
+
 GET /people/students/1
-#+END_SRC
+
 are not allowed.
 
-- RPCs as POST requests
+Relational data is flat by nature.
+
+#+ATTR_REVEAL: :frag roll-in
+RPCs as POST requests
 
 * Try postgrest now
 
-- docker image
+#+ATTR_REVEAL: :frag roll-in
+Docker image
 https://hub.docker.com/r/begriffs/postgrest/
 
-- AWS
+#+ATTR_REVEAL: :frag roll-in
+AWS
+Hint: AWS Lambda.
 
-- Heroku
+#+ATTR_REVEAL: :frag roll-in
+Heroku
+
+* Demo time!
+    :PROPERTIES:
+    :reveal_background: ./images/demo.jpg
+    :reveal_background_trans: slide
+    :END:
 
 * ?s
-#+BEGIN_SRC sql
-CREATE TABLE genres (
-    id serial NOT NULL PRIMARY KEY,
-    name character varying(255) NOT NULL,
-    parent_id integer REFERENCES genres (id)
-);
-#+END_SRC
-
-#+begin_src sql
-  SELECT * FROM mytable
-  WHERE id > 500
-#+end_src
 
 
 * Links
 
-- http://blog.jonharrington.org/postgrest-introduction/
+- [[https://github.com/begriffs/postgrest][Show me the code]]
 
-- https://www.compose.io/articles/your-sql-schema-is-your-json-api-with-postgrest/
+- http://postgrest.com/
 
-- http://marmelab.com/blog/2015/03/23/using-ng-admin-with-postgrest.html
+- [[http://nobackend.org/][NoBackend]]
+
+- [[https://github.com/badri/pgcon2016][These slides and demo code]]
+
+* Image credits 
+
+- https://www.flickr.com/photos/pong/288491653/
+- https://www.flickr.com/photos/hinnosaar/3932759035/
+- https://www.flickr.com/photos/sidelong/3878741556/
+- https://www.flickr.com/photos/72562013@N06/8415307629/
+- https://www.flickr.com/photos/ajmexico/3281139507/
+- https://www.flickr.com/photos/kylemay/1470605905/
+- https://www.flickr.com/photos/matski_98/21938357/
+- https://www.flickr.com/photos/danramarch/4565233602/
+- https://www.flickr.com/photos/chrisandhilleary/191838649/
+- https://www.flickr.com/photos/natethemagi/8674074864/
+- https://www.flickr.com/photos/cactusbeetroot/5876761252/

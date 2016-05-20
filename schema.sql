@@ -242,6 +242,19 @@ $$;
 
 -- redacted users view
 
+create or replace function
+basic_auth.current_email() returns text
+  language plpgsql
+  as $$
+begin
+  return current_setting('postgrest.claims.email');
+exception
+  -- handle unrecognized configuration parameter error
+  when undefined_object then return '';
+end;
+$$;
+
+
 create or replace view users as
 select actual.role as role,
        '***'::text as pass,
@@ -335,19 +348,6 @@ begin
   return result;
 end;
 $$;
-
-create or replace function
-basic_auth.current_email() returns text
-  language plpgsql
-  as $$
-begin
-  return current_setting('postgrest.claims.email');
-exception
-  -- handle unrecognized configuration parameter error
-  when undefined_object then return '';
-end;
-$$;
-
 
 -- Todo App
 -- ======
