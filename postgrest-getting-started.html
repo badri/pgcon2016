@@ -6,8 +6,8 @@
 <title>Building a BaaS using PostgreSQL</title>
 <meta name="author" content="(Lakshmi Narasimhan)"/>
 
-<link rel="stylesheet" href="file:///home/lakshmi/pgcon/reveal.js/css/reveal.css"/>
-<link rel="stylesheet" href="file:///home/lakshmi/pgcon/reveal.js/css/theme/night.css" id="theme"/>
+<link rel="stylesheet" href="http://cdn.jsdelivr.net/reveal.js/3.0.0/css/reveal.css"/>
+<link rel="stylesheet" href="https://raw.githubusercontent.com/badri/pgcon2016/master/night.css" id="theme"/>
 
 <!-- If the query includes 'print-pdf', include the PDF print sheet -->
 <script>
@@ -15,7 +15,7 @@
         var link = document.createElement( 'link' );
         link.rel = 'stylesheet';
         link.type = 'text/css';
-        link.href = 'file:///home/lakshmi/pgcon/reveal.js/css/print/pdf.css';
+        link.href = 'http://cdn.jsdelivr.net/reveal.js/3.0.0/css/print/pdf.css';
         document.getElementsByTagName( 'head' )[0].appendChild( link );
     }
 </script>
@@ -406,7 +406,7 @@ Rudimentary HATEOS
 
 </section>
 <section>
-<section id="sec-8-5">
+<section id="sec-8-5" data-background="./images/slice.jpg" data-background-transition="slide">
 
 <h3 >Get only what you need</h3>
 <p class="fragment roll-in">
@@ -501,21 +501,10 @@ PgREST
 <h2 >Limitations</h2>
 <p class="fragment roll-in">
 No nested resources
+<code>GET /people/students/1</code> not allowed.
 </p>
 
-<p>
-Things like:
-</p>
-
-<p>
-GET /people/students/1
-</p>
-
-<p>
-are not allowed.
-</p>
-
-<p>
+<p class="fragment roll-in">
 Relational data is flat by nature.
 </p>
 
@@ -583,14 +572,15 @@ Heroku
 <li><a href="https://www.flickr.com/photos/chrisandhilleary/191838649/">https://www.flickr.com/photos/chrisandhilleary/191838649/</a></li>
 <li><a href="https://www.flickr.com/photos/natethemagi/8674074864/">https://www.flickr.com/photos/natethemagi/8674074864/</a></li>
 <li><a href="https://www.flickr.com/photos/cactusbeetroot/5876761252/">https://www.flickr.com/photos/cactusbeetroot/5876761252/</a></li>
+<li><a href="https://www.flickr.com/photos/micronova/4518582224/">https://www.flickr.com/photos/micronova/4518582224/</a></li>
 
 </ul>
 </section>
 </div>
 </div>
 
-<script src="file:///home/lakshmi/pgcon/reveal.js/lib/js/head.min.js"></script>
-<script src="file:///home/lakshmi/pgcon/reveal.js/js/reveal.js"></script>
+<script src="http://cdn.jsdelivr.net/reveal.js/3.0.0/lib/js/head.min.js"></script>
+<script src="http://cdn.jsdelivr.net/reveal.js/3.0.0/js/reveal.js"></script>
 
 <script>
 // Full list of configuration options available here:
@@ -617,10 +607,10 @@ multiplex: {
 
 // Optional libraries used to extend on reveal.js
 dependencies: [
- { src: 'file:///home/lakshmi/pgcon/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
- { src: 'file:///home/lakshmi/pgcon/reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
- { src: 'file:///home/lakshmi/pgcon/reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
- { src: 'file:///home/lakshmi/pgcon/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
 ]
 });
 </script>

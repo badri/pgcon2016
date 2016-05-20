@@ -14,7 +14,6 @@ Import your schema. You should get some notices, but that's OK.
 $ psql -h 172.17.0.6 -U pgcon
 
 pgcon=# \i schema.sql
-
 ```
 
 Test the API using python.

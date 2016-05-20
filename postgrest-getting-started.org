@@ -1,6 +1,6 @@
 #+STARTUP: indent
 #+STARTUP: showeverything
-#+REVEAL_ROOT: file:///home/lakshmi/pgcon/reveal.js
+#+REVEAL_ROOT: http://cdn.jsdelivr.net/reveal.js/3.0.0/
 #+REVEAL_THEME: night
 #+REVEAL_HLEVEL: 2
 #+REVEAL_PLUGINS: (highlight markdown notes)
