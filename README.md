@@ -101,6 +101,7 @@ headers['Range-Unit'] = 'items'
 headers['Range'] =  '0-4'
 r = requests.post('http://localhost/todos', headers=headers, json=data)
 r = requests.get('http://localhost/todos', headers=headers)
+headers = {'Authorization': 'Bearer ' + token }
 ```
 
 
