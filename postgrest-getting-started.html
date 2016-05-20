@@ -52,7 +52,7 @@ Your mission, if you choose to accept it, is to build a REST API on top of your 
 </section>
 <section id="sec-3" data-background="./images/fw.jpg" data-background-transition="slide">
 
-<h2 >Frameworks</h2>
+<h2 >Pick a framework!</h2>
 </section>
 <section>
 <section id="sec-3-1" data-background="./images/fw.jpg" data-background-transition="slide">
@@ -82,25 +82,25 @@ Your mission, if you choose to accept it, is to build a REST API on top of your 
 
 <h2 >Enter Postgrest</h2>
 <p class="fragment roll-in">
-cleaner and a more standards compliant API than the one you'd write from scratch
+Cleaner and a more standards compliant API than the one you'd write from scratch
 </p>
 
 <p class="fragment roll-in">
-quick to get started, all you need to do is create the database.
+Quick to get started, all you need to do is create the database.
 </p>
 
 <p class="fragment roll-in">
-simplicity
+Simplicity
 </p>
 
 <p class="fragment roll-in">
-easy to scale
+Easy to scale
 </p>
 
 </section>
 <section id="sec-5">
 
-<h2 >Why noBackend</h2>
+<h2 >Look ma! no backend</h2>
 
 <div class="figure">
 <p><img src="./images/server.jpg" alt="server.jpg" />
@@ -335,6 +335,10 @@ Open standard for passing claims between 2 parties.
 User does HTTP requests with a role claim
 </p>
 
+<p class="fragment roll-in">
+Postgrest will switch to that role for the duration of the request
+</p>
+
 </section>
 <section id="sec-8-3-2" data-background="./images/safe.jpg" data-background-transition="slide">
 
@@ -431,22 +435,34 @@ GET /people?employees-&gt;3-&gt;&gt;id=eq.2
 <section id="sec-8-6-1">
 
 <h4 >Bulk inserts</h4>
+<p>
+Set <code>Content-Type: text/csv</code> and do:
+</p>
+
+<p>
+POST /people
+name,age,height
+J Doe,62,70
+Jonas,10,55
+</p>
+
 
 </section>
 <section id="sec-8-6-2">
 
 <h4 >Bulk updates</h4>
+<p>
+Mark all people whose age &lt; 13 as "child".
+</p>
 
+<p>
+PATCH /people?age=lt.13
+{
+  "person<sub>type</sub>": "child"
+}
+</p>
 </section>
-<section id="sec-8-6-3">
 
-<h4 >Limiting</h4>
-
-</section>
-<section id="sec-8-6-4">
-
-<h4 >Pagination</h4>
-</section>
 
 </section>
 <section id="sec-9" data-background="./images/retro.jpg" data-background-transition="slide">
@@ -466,15 +482,18 @@ GET /people?employees-&gt;3-&gt;&gt;id=eq.2
 </section>
 <section id="sec-10">
 
-<h2 >Ecosystem and similar tools</h2>
+<h2 >Similar tools</h2>
 <p class="fragment roll-in">
 PostGraphQL
 <a href="https://github.com/calebmer/postgraphql" class="fragment roll-in">https://github.com/calebmer/postgraphql</a>
 </p>
 
-<p>
-Foobar
+
+<p class="fragment roll-in">
+PgREST
+<a href="http://pgre.st/" class="fragment roll-in">http://pgre.st/</a>
 </p>
+
 
 </section>
 <section id="sec-11">

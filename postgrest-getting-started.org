@@ -20,7 +20,7 @@
 Your mission, if you choose to accept it, is to build a REST API on top of your database.
 
 
-* Frameworks
+* Pick a framework!
     :PROPERTIES:
     :reveal_background: ./images/fw.jpg
     :reveal_background_trans: slide
@@ -49,18 +49,18 @@ Your mission, if you choose to accept it, is to build a REST API on top of your 
 * Enter Postgrest
 
 #+ATTR_REVEAL: :frag roll-in
-cleaner and a more standards compliant API than the one you'd write from scratch
+Cleaner and a more standards compliant API than the one you'd write from scratch
 
 #+ATTR_REVEAL: :frag roll-in
-quick to get started, all you need to do is create the database.
+Quick to get started, all you need to do is create the database.
 
 #+ATTR_REVEAL: :frag roll-in
-simplicity
+Simplicity
 
 #+ATTR_REVEAL: :frag roll-in
-easy to scale
+Easy to scale
 
-* Why noBackend
+* Look ma! no backend
 
 [[./images/server.jpg]]
 
@@ -265,6 +265,9 @@ Open standard for passing claims between 2 parties.
 #+ATTR_REVEAL: :frag roll-in
 User does HTTP requests with a role claim
 
+#+ATTR_REVEAL: :frag roll-in
+Postgrest will switch to that role for the duration of the request
+
 *** JWT other benefits
     :PROPERTIES:
     :reveal_background: ./images/safe.jpg
@@ -325,6 +328,10 @@ GET /
 Rudimentary HATEOS
 
 ** Get only what you need
+    :PROPERTIES:
+    :reveal_background: ./images/slice.jpg
+    :reveal_background_trans: slide
+    :END:
 
 #+ATTR_REVEAL: :frag roll-in
 You can customize which columns are returned using the select parameter:
@@ -341,12 +348,23 @@ GET /people?employees->3->>id=eq.2
 ** Other cool stuff
 
 *** Bulk inserts
+Set =Content-Type: text/csv= and do:
+
+POST /people
+name,age,height
+J Doe,62,70
+Jonas,10,55
+
 
 *** Bulk updates
 
-*** Limiting
+Mark all people whose age < 13 as "child".
 
-*** Pagination
+PATCH /people?age=lt.13
+{
+  "person_type": "child"
+}
+
 
 * Use cases
     :PROPERTIES:
@@ -363,24 +381,24 @@ GET /people?employees->3->>id=eq.2
 
 - poor man's Parse, using =pg_notify=
  
-* Ecosystem and similar tools
+* Similar tools
 #+ATTR_REVEAL: :frag roll-in
 PostGraphQL
 https://github.com/calebmer/postgraphql
 
-Foobar
+
+#+ATTR_REVEAL: :frag roll-in
+PgREST
+http://pgre.st/
+
 
 * Limitations
 
 #+ATTR_REVEAL: :frag roll-in
 No nested resources
+=GET /people/students/1= not allowed.
 
-Things like:
-
-GET /people/students/1
-
-are not allowed.
-
+#+ATTR_REVEAL: :frag roll-in
 Relational data is flat by nature.
 
 #+ATTR_REVEAL: :frag roll-in
@@ -431,3 +449,4 @@ Heroku
 - https://www.flickr.com/photos/chrisandhilleary/191838649/
 - https://www.flickr.com/photos/natethemagi/8674074864/
 - https://www.flickr.com/photos/cactusbeetroot/5876761252/
+- https://www.flickr.com/photos/micronova/4518582224/
